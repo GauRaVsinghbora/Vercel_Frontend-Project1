@@ -12,8 +12,8 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} >
       <Route path="" element={<Home />} >
-        <Route index element={<AllPosts/>} />
-        <Route path="your-posts" element={<YourPosts/>} />
+          <Route index element={<AllPosts/>} />
+          <Route path="/your-posts" element={<YourPosts/>} />
       </Route>
       <Route path="/login" element={
         <Protected authentication={false}>
