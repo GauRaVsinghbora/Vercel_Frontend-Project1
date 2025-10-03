@@ -5,13 +5,16 @@ import App from './App.jsx'
 import {Route,RouterProvider,createBrowserRouter,createRoutesFromElements,} from "react-router-dom";
 import { Provider } from 'react-redux';
 import { store } from './store/store.js';
-import {Home, Login,Signup, About, Contact,VerifyOtp} from './pages'
+import {LandingPage,Home,AllPosts,YourPosts, Login,Signup, About, Contact,VerifyOtp} from './pages'
 import Protected from './components/AuthLayout.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} >
-      <Route path="" element={<Home />} />
+      <Route path="" element={<Home />} >
+        <Route index element={<AllPosts/>} />
+        <Route path="your-posts" element={<YourPosts/>} />
+      </Route>
       <Route path="/login" element={
         <Protected authentication={false}>
           <Login/>

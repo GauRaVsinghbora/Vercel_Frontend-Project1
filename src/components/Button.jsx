@@ -14,7 +14,7 @@ function Button(
             onClick={onClick}
             id={id}
             ref={ref}
-            className={`w-full mt-4 py-3 px-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold focus:outline-none ${className}`}
+            className={`mt-4 py-3 px-3 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold focus:outline-none ${className}`}
             {...props}
         >
             {label}
