@@ -10,17 +10,21 @@ function SignUp() {
     const [ error,setError ] = useState(null)
     const navigate = useNavigate()
     const { register, handleSubmit } = useForm()
+    const [loading, setLoading] = useState(false);
 
     const create = async (data)=>{
         setError("")
         try{
             localStorage.setItem("Email", data.email);
+            setLoading(true);
             const response = await signup(data);
             if (response){
                 navigate('/verify-otp')
             }
         }catch(err){
             setError(err.response?.data.message); 
+        }finally{
+            setLoading(false);
         }
     }
     return (
@@ -72,7 +76,8 @@ function SignUp() {
                     <Button
                         type="submit"
                         className="w-full"
-                        label="Create Account"
+                        disable={loading}
+                        label={loading? 'Signing up...': 'Sign up' }
                     />
                 </div>
             </form>

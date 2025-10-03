@@ -13,10 +13,13 @@ function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { register, handleSubmit } = useForm()
+    const [loading , setLoading] = useState(false); 
     const [error, setError ] = useState(null)
 
     const create = async (data) => {
         try {
+            setLoading(true);
+            setError(null);
             const response = await LoginApi(data);
             if (response){
                 const useData = await getUser();
@@ -26,6 +29,9 @@ function Login() {
             }
         }catch (err) {
             setError(err.response?.data.message); 
+        } finally{
+            // ensure loading is reset no matter succes/fail
+            setLoading(false);
         }
     }
 
@@ -71,7 +77,8 @@ function Login() {
                         <Button
                             type="submit"
                             className="w-full"
-                            label="sign in"
+                            disabled={loading}
+                            label={loading ? 'Logging in...': 'Login'}
                         /> 
                     </div>
                 </form>

@@ -13,6 +13,7 @@ function VerifyOtp() {
     const dispatch = useDispatch();
     const { handleSubmit, setValue } = useForm();
     const [error, setError] = useState(null);
+    const [loading,setLoading] = useState(false);
     const [otp, setOtp] = useState(new Array(6).fill(""));
     const inputsRef = useRef([]);
     const email = localStorage.getItem("Email");
@@ -49,23 +50,27 @@ function VerifyOtp() {
 
     const create = async (formData) => {
         try {
-        const payload = { otp: formData.otp, email };
+            setError(null);
+            setLoading(true);
+            const payload = { otp: formData.otp, email };
 
-        const response = await verifyOtp(payload);
-        if (response) {
-            localStorage.removeItem("Email");
-            const useData = await getUser();
-            if(useData) {
-                dispatch (login(useData))
-                toast.success("succes full login");
-                navigate("/");
-            }else{
-                toast.success("please login");
-                navigate('/login');
-            }
+            const response = await verifyOtp(payload);
+            if (response) {
+                localStorage.removeItem("Email");
+                const useData = await getUser();
+                if(useData) {
+                    dispatch (login(useData))
+                    toast.success("succes full login");
+                    navigate("/");
+                }else{
+                    toast.success("please login");
+                    navigate('/login');
+                }
         }
         } catch (err) {
         setError(err.response?.data?.message || "Verification failed");
+        }finally{
+            setLoading(false);
         }
     };
 
@@ -118,8 +123,8 @@ function VerifyOtp() {
             <Button
                 type="submit"
                 className="w-full mt-6"
-                label="Verify"
-                disabled={otp.join("").length < 6}
+                label={loading? 'Verifying...': 'Verify OTP' }
+                disabled={otp.join("").length < 6 || loading}
             />
             </form>
         </div>
