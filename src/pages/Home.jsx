@@ -18,7 +18,7 @@ function Home() {
             {/* create post button*/}
             <Button
                 label="Create Post"
-                className="w-[200px] bg-orange-700 hover:bg-orange-800 absolute bottom-5 left-1/2 transform -translate-x-1/2"
+                className="w-[200px] bg-orange-700 hover:bg-orange-800 fixed bottom-5 left-1/2 transform -translate-x-1/2"
             />
         </div> 
     ):(<LandingPage/>)
